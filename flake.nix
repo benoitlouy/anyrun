@@ -109,8 +109,21 @@
         };
 
         overlayAttrs = {
-          anyrun = packages.anyrun;
-          anyrun-with-all-plugins = packages.anyrun-with-all-plugins;
+          inherit (packages)
+          anyrun
+          anyrun-with-all-plugins;
+          anyrunPlugins = {
+            inherit (packages)
+            applications
+            dictionary
+            kidex
+            randr
+            rink
+            shell
+            stdin
+            symbols
+            translate;
+          };
         };
       };
 

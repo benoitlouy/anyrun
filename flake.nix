@@ -13,6 +13,8 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-linux"];
 
+      imports = [ flake-parts.flakeModules.easyOverlay ];
+
       perSystem = {
         config,
         self',
@@ -23,7 +25,7 @@
       }: let
         inherit (inputs.nixpkgs) lib;
         inherit (lib) getExe;
-      in {
+      in rec {
         # provide the formatter for nix fmt
         formatter = pkgs.alejandra;
 
@@ -104,6 +106,11 @@
             inherit inputs lockFile;
             name = "websearch";
           };
+        };
+
+        overlayAttrs = {
+          anyrun = packages.anyrun;
+          anyrun-with-all-plugins = packages.anyrun-with-all-plugins;
         };
       };
 

@@ -28,7 +28,9 @@
         ...
       }: let
         inherit (pkgs) callPackage;
-      in {
+        inherit (inputs.nixpkgs) lib;
+        inherit (lib) getExe;
+      in rec {
         # provide the formatter for nix fmt
         formatter = pkgs.alejandra;
 
@@ -82,8 +84,10 @@
           websearch = mkPlugin "websearch";
         };
 
-        # Set up an overlay from packages exposed by this flake
-        overlayAttrs = config.packages;
+        overlayAttrs = {
+          anyrun = packages.anyrun;
+          anyrun-with-all-plugins = packages.anyrun-with-all-plugins;
+        };
       };
 
       flake = {

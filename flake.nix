@@ -18,7 +18,7 @@
     ...
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [flake-parts.flakeModules.easyOverlay];
+      imports = [ ./nix/overlays.nix ];
       systems = import systems;
 
       perSystem = {
@@ -30,7 +30,7 @@
         inherit (pkgs) callPackage;
         inherit (inputs.nixpkgs) lib;
         inherit (lib) getExe;
-      in rec {
+      in {
         # provide the formatter for nix fmt
         formatter = pkgs.alejandra;
 
@@ -82,24 +82,6 @@
           symbols = mkPlugin "symbols";
           translate = mkPlugin "translate";
           websearch = mkPlugin "websearch";
-        };
-
-        overlayAttrs = {
-          inherit (packages)
-          anyrun
-          anyrun-with-all-plugins;
-          anyrunPlugins = {
-            inherit (packages)
-            applications
-            dictionary
-            kidex
-            randr
-            rink
-            shell
-            stdin
-            symbols
-            translate;
-          };
         };
       };
 

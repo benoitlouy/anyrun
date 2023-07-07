@@ -77,6 +77,31 @@ The flake provides multiple packages:
 - translate - the translate plugin
 - websearch - the websearch plugin
 
+```nix
+# flake.nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    anyrun.url = "github:Kirottu/anyrun";
+    anyrun.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, anyrun }: let
+  in {
+    nixosConfigurations.HOSTNAME = nixpkgs.lib.nixosSystem {
+      # ...
+
+      modules = [
+        { nixpkgs.overlays = [ anyrun.overlays.default ]; }
+      ];
+
+      # ...
+    };
+  };
+}
+
+```
+
 #### home-manager module
 
 We have a home-manager module available at `homeManagerModules.default`. You use it like this:

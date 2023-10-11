@@ -24,7 +24,8 @@ in
             shell
             stdin
             symbols
-            translate;
+            translate
+            websearch;
         };
       }
     );

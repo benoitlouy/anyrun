@@ -21,8 +21,6 @@
       imports = [ ./nix/overlays.nix ];
       systems = import systems;
 
-      imports = [ ./nix/overlays.nix ];
-
       perSystem = {
         self',
         config,
